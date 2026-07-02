@@ -1,0 +1,254 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle, #833ab4, #fd1d1d, #fcb045);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+h1 { margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
+p { margin-top: 0; opacity: 0.8; }
+
+.spin-wheel-outer-container {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    margin: 20px auto 30px;
+}
+
+/* Penunjuk Panah (Pointer) yang Menunjuk ke Bawah */
+.pointer {
+    position: absolute;
+    top: -10px; /* Sedikit disesuaikan posisinya agar pas di atas roda */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 35px solid #fff; /* Diubah ke border-top agar menunjuk ke bawah */
+    z-index: 10;
+}
+
+.wheel-canvas-container {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+#wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 5s ease-out;
+}
+
+.center-circle {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 5;
+}
+
+/* Lingkaran Putih Tengah Roda */
+.center-circle {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px; height: 65px; /* Sedikit disesuaikan ukurannya agar proporsional */
+    background: #fff;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    z-index: 5;
+}
+
+/* Logo Instagram Tengah Roda Bergradasi */
+.wheel-center-icon {
+    font-size: 38px; /* Ukuran besar logo di tengah */
+    background: linear-gradient(45deg, #fccc63, #fbad50, #cd486b, #4c68d7); /* Gradien warna Instagram asli */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+button {
+    background-color: #fff;
+    color: #fd1d1d;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px; font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    height: 30px;
+}
+
+/* === MODAL POPUP STYLES === */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    z-index: 100;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90%; max-width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    transform: translateY(-50px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.show .modal-card {
+    transform: translateY(0);
+}
+
+.instagram-icon {
+    font-size: 45px;
+    background: linear-gradient(45deg, #fccc63, #fbad50, #cd486b, #4c68d7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.modal-header h2 { margin: 5px 0; font-size: 24px; color: #fff; }
+.modal-header p { font-size: 14px; color: #aaa; line-height: 1.5; margin-bottom: 20px; }
+#giftName { color: #fbad50; font-weight: bold; }
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px; top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #cd486b;
+    outline: none;
+}
+
+#submitClaimBtn {
+    width: 100%;
+    background: linear-gradient(45deg, #fd1d1d, #833ab4);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px; font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.3s;
+}
+
+#submitClaimBtn:hover { opacity: 0.9; }
+
+/* === TOAST NOTIFICATION STYLES === */
+.notification-toast {
+    position: fixed;
+    top: 20px; 
+    right: -350px;
+    background: #1f1f1f;
+    border-left: 6px solid #4caf50;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: flex; 
+    align-items: center;
+    z-index: 200;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.notification-toast.show { 
+    right: 20px; 
+}
+
+.toast-content { 
+    display: flex; 
+    align-items: center; 
+}
+
+.toast-content i { 
+    font-size: 24px; 
+    margin-right: 15px; 
+}
+
+.toast-content i.success { color: #4caf50; }
+.toast-content i.error { color: #f44336; }
+.toast-content i.loading { color: #2196f3; animation: spin_loading 1s linear infinite; }
+
+.toast-message { display: flex; flex-direction: column; text-align: left; }
+.toast-title { font-weight: bold; color: #fff; font-size: 15px; }
+.toast-desc { color: #aaa; font-size: 13px; margin-top: 2px; }
+
+@keyframes spin_loading { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
